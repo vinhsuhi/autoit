@@ -1,0 +1,12 @@
+# Chung cu
+ProjectName
+ProjectArea
+vitriTheoBangGiaDat
+viTriThuaDat
+nFloors
+capHangNha
+propertyPercent
+startYear
+vanBanCungCapThongTinDay
+vanBanCUngCapThongTinID
+kiemTraDate
