@@ -1,0 +1,68 @@
+﻿Username2 = "WindowsForms10.EDIT.app.0.33c0d9d28"
+UserBirth2 = "WindowsForms10.EDIT.app.0.33c0d9d31"
+CMND1 = "Edit6"
+CMND2 = "Edit4"
+UserID2 = "WindowsForms10.EDIT.app.0.33c0d9d30"
+IDDate2 = "WindowsForms10.EDIT.app.0.33c0d9d26"
+IDPlace2 = "WindowsForms10.EDIT.app.0.33c0d9d29"
+Address2Button = "WindowsForms10.BUTTON.app.0.33c0d9d31"
+ComboTP2 = "WindowsForms10.COMBOBOX.app.0.33c0d9d3"
+ComboQH2 = "WindowsForms10.COMBOBOX.app.0.33c0d9d2"
+ComboPhuong2 = "WindowsForms10.COMBOBOX.app.0.33c0d9d1"
+local2 = "WindowsForms10.EDIT.app.0.33c0d9d2"
+608, 113 = "ghi dia chi"
+"Thông báo" "WindowsForms10.BUTTON.app.0.33c0d9d1" thoat
+
+
+Nha "422, 16"
+ThemButton = "WindowsForms10.BUTTON.app.0.33c0d9d68"
+canhochungcu = "WindowsForms10.COMBOBOX.app.0.33c0d9d18"
+SoHieu = "WindowsForms10.EDIT.app.0.33c0d9d63"
+DienTichSan = "WindowsForms10.EDIT.app.0.33c0d9d56"
+DienTichXayDung = "WindowsForms10.EDIT.app.0.33c0d9d53"
+DienTichSuDung = "WindowsForms10.EDIT.app.0.33c0d9d53"
+ButtonCapNhat = "WindowsForms10.BUTTON.app.0.33c0d9d66"
+ChuyenQua = "WindowsForms10.BUTTON.app.0.33c0d9d45"
+Su dung lai thong bao khi an cap nhat
+
+ThuaDat = "346, 118"
+ThemThuaDat = "WindowsForms10.BUTTON.app.0.33c0d9d96"
+SoHieuToBanDo = "Edit6"
+SoThuTuThua = "WindowsForms10.EDIT.app.0.33c0d9d49"
+SoThuaLonNhat = "WindowsForms10.STATIC.app.0.33c0d9d25"
+landArea = "WindowsForms10.STATIC.app.0.33c0d9d25"
+soThuaCu = "WindowsForms10.EDIT.app.0.33c0d9d50"
+soToCu = "WindowsForms10.EDIT.app.0.33c0d9d51"
+DungSoThuaCu = "WindowsForms10.BUTTON.app.0.33c0d9d52"
+DiaChiThua = "WindowsForms10.EDIT.app.0.33c0d9d41"
+NguonGOcButton = "WindowsForms10.BUTTON.app.0.33c0d9d53"
+WINDOWS = Chọn nguồn gốc sử dụng
+nhà nước giao đất có thu tiền sử dụng đất = "42, 133"
+Công nhận quyền... = "42, 62"
+Nhận chuyển nhượng = "40, 368"
+Được tặng cho = "42, 422"
+capNhat = "WindowsForms10.BUTTON.app.0.33c0d9d55"
+Thông báo
+WindowsForms10.COMBOBOX.app.0.33c0d9d16
+WindowsForms10.COMBOBOX.app.0.33c0d9d15
+WindowsForms10.COMBOBOX.app.0.33c0d9d14
+ODT (Đất ở tại đô thị)
+Cập nhật = "WindowsForms10.BUTTON.app.0.33c0d9d36"
+Thông báo
+Chuyển qua = "WindowsForms10.BUTTON.app.0.33c0d9d31"
+
+
+CapGCN = "142, 114"
+ThemGiayMoi = 'WindowsForms10.BUTTON.app.0.33c0d9d24'
+TichVaoChungCu = "940, 201"
+TichVaoThuaDat = "489, 201"
+SoCap = "WindowsForms10.BUTTON.app.0.33c0d9d17"
+LaySeries = "WindowsForms10.BUTTON.app.0.33c0d9d11"
+EditNeuGCNID = "WindowsForms10.EDIT.app.0.33c0d9d20"
+SotiepTheo = "WindowsForms10.BUTTON.app.0.33c0d9d13"
+GhiChuTrang2 = "WindowsForms10.EDIT.app.0.33c0d9d25"
+CapNhat = "WindowsForms10.BUTTON.app.0.33c0d9d26"
+Xu ly thong bao
+BienTap = WindowsForms10.BUTTON.app.0.33c0d9d27
+LaySoDo = WindowsForms10.BUTTON.app.0.33c0d9d22
+

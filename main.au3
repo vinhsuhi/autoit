@@ -39,14 +39,14 @@ Global $propertyAddress, $propertyArea, $DienTichSuDungCC
 Global $ProjectName, $InvestorName, $startYear, $nFloors, $vitritheoBangGiaDat ; property Chung cư
 Global $projectArea
 Global $contracName, $contractID, $contractDate
-
+Global $flagGCNID = 0, $newGCNID, $flagCap = 0
 
 Global $sellerName, $PriceInContract, $deliveryPaperDate, $priceInLiquidation, $totalPrice
 Global $landArea, $oldPaperNumber, $oldLandID ; THUA DAT
 
 Global $duAn, $soHuuNhaNuoc, $taiDinhCu, $congVanID, $congVanDate, $pricePayed
 Global $propertyPercent, $duongDoanDuong, $capHang
-Global $oldGCNID, $oldGCNDate, $oldGCNPlace, $isCapDoiC, $isCapDoiM, $isCapMoi, $isChuyenNhuong, $isTangCho
+Global $oldGCNID, $oldGCNDate, $oldGCNPlace, $isCapDoiC, $isCapDoiM, $isCapMoi, $isChuyenNhuong = 0, $isTangCho = 0
 ;Region
 Global $ChonChungCu = 9999, $Cap  =9999, $OK1 = 9999, $OK2 = 9999, $OK3 = 9999, $OK4 = 9999, $Button3CM = 9999, $Button4CM = 9999
 Global $CapMoi, $DiaChiDat, $capDoi
@@ -130,15 +130,14 @@ Func ShowUpFirstGUI()
 						ElseIf $isCapDoiM = 1 Then
 							MsgBox(0, 0, "cấp đổi mới")
 						ElseIf $isCapDoiC = 1 Then
-							MsgBox(0, 0, "cấp đổi cũ")
-;~ 							Run("C:\Program Files (x86)\ViLIS\GCN2014\Phoenix.exe")
-;~ 							Configure($quanName, $phuongName)
+							Run("C:\Program Files (x86)\ViLIS\GCN2014\Phoenix.exe")
+							Configure($quanName, $phuongName)
 							ShowUpCapDoiCuGUI()
 						ElseIf $isCapMoi = 1 Then
 							; NẾU CHỌN CẤP MỚI THÌ MỞ PHẦN MỀM CẤP MỚI GIẤY CHỨNG NHẬN LÊN, SAU ĐÓ THIẾT LẬP
 							; VÀ CUỐI CÙNG LÀ MỞ GIAO DIỆN CẤP MỚI CỦA MÌNH LÊN
-;~ 							Run("C:\Program Files (x86)\ViLIS\GCN2014\Phoenix.exe")
-;~ 							Configure($quanName, $phuongName)
+							Run("C:\Program Files (x86)\ViLIS\GCN2014\Phoenix.exe")
+							Configure($quanName, $phuongName)
 							ShowUpCapMoiGUI()
 						EndIf
 				EndSwitch
@@ -186,7 +185,8 @@ Func ShowUpFirstGUI()
 						If $UserName1 = "" Or $UserID1[1] = "" Then
 							MsgBox(0, 0, "Tên người sử dụng đất hoặc CMND không được để trống")
 						Else
-							; DO SOMETHING INTERACTIVE BETWEEN TWO SOFTWARE
+							setUserInfo()
+							WinActivate("Cap Moi")
 						EndIf
 					; Neu nhan Nut Ok thu nhat o phan Thua Dat
 					Case $OK2
@@ -202,8 +202,8 @@ Func ShowUpFirstGUI()
 						If $landArea = "" Then
 							MsgBox(0, 0, "Bạn phải nhập diện tích đất")
 						Else
-							MsgBox(0, 0, "ahihi")
-							; DO SOMETHING INTERACTIVE BETWEEN TWO SOFTWARE
+							nhapThuaDat()
+							WinActivate("Cap Moi")
 						EndIf
 					; Neu nhan nut OK thu 2 o phan Thua Dat
 					Case $OK3
@@ -217,7 +217,8 @@ Func ShowUpFirstGUI()
 							MsgBox(0, 0, "Bạn phải nhập diện tích đất, đây không phải phần cho căn hộ chung cư")
 						Else
 							MsgBox(0, 0, "ahihi")
-							; DO SOMETHING INTERACTIVE BETWEEN TWO SOFTWARE
+							nhapNhaOThongThuong()
+							WinActivate("Cap Moi")
 						EndIf
 					; Neu nhan nut OK o phan can ho chung cu
 					Case $OK4
@@ -232,8 +233,27 @@ Func ShowUpFirstGUI()
 						EndIf
 					; don't care
 					Case $Button4CM
+						$flagGCNID = 1
+						MsgBox(0, "Thong Bao", "Bạn đã lấy số tiếp theo")
 					Case $Cap
+						CapGiay()
+						$flagCap = 1
+						WinActivate("Cap Moi")
 					Case $Button3CM
+						If $flagCap = 0 Then
+							MsgBox(0, 0, "Phải cập nhật đã")
+						Else
+							WinActivate($theGCNname)
+							WinWaitActive($theGCNname)
+							Send("{F3}")
+							Sleep(2000)
+							Send("{ENTER}")
+							Sleep(500)
+							Send("{F4}")
+							Local $laySoDo = "WindowsForms10.BUTTON.app.0.33c0d9d22"
+							WinWaitActive($theGCNname)
+							ControlClick($theGCNname, "", $laySoDo)
+						EndIf
 					; Neu Bam Nut Lam Phieu Chuyen
 					Case $lamPhieuChuyen
 						$duAn = GUICtrlRead($muaNhaDuAnRadio)
@@ -394,8 +414,27 @@ Func ShowUpFirstGUI()
 						EndIf
 					; don't care
 					Case $Button4CM
+						$flagGCNID = 1
+						MsgBox(0, "Thong Bao", "Bạn đã lấy số tiếp theo")
 					Case $Cap
+						CapGiay()
+						$flagCap = 1
+						WinActivate("Cap Moi")
 					Case $Button3CM
+						If $flagCap = 0 Then
+							MsgBox(0, 0, "Phải cập nhật đã")
+						Else
+							WinActivate($theGCNname)
+							WinWaitActive($theGCNname)
+							Send("{F3}")
+							Sleep(2000)
+							Send("{ENTER}")
+							Sleep(500)
+							Send("{F4}")
+							Local $laySoDo = "WindowsForms10.BUTTON.app.0.33c0d9d22"
+							WinWaitActive($theGCNname)
+							ControlClick($theGCNname, "", $laySoDo)
+						EndIf
 					; Neu Bam Nut Lam Phieu Chuyen
 					Case $lamPhieuChuyen
 						If $propertyAddress = "" Then
@@ -713,6 +752,7 @@ Func ShowUpCapMoiGUI()
 	GUICtrlCreateLabel("Dien Tich Xay Dung", 24, 536, 100, 17)
 	$editDienTichXayDung = GUICtrlCreateInput("", 168, 536, 121, 21)
 	$comboNha = GUICtrlCreateCombo("Nha o rieng le", 168, 400, 145, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
+	GUICtrlSetData($comboNha, "Nha lien ke|Nha biet thu|Nha vuon", "Nha o rieng le")
 	$OK3 = GUICtrlCreateButton("OK", 24, 584, 107, 33)
 
 	; TAB 3
@@ -946,7 +986,7 @@ Func ChooseMyBox($name, $control, $thetext, $xaorhuyen)
 	For $a = 1 To $MAX
 		$count += 1
 		$ctext = ControlGetText($name, "", $control)
-		If StringInStr($ctext, $thetext) Then
+		If StringInStr($ctext, $thetext) Or StringInStr($thetext, $ctext) Then
 			Send("{ENTER}")
 			ExitLoop
 		EndIf
@@ -981,9 +1021,9 @@ Func Configure($huyen, $xa)
 	EndIf
 EndFunc
 
-Func SetAddress($tinh, $huyen, $xa, $diaPhuong)
+Func SetAddress($tinh, $huyen, $xa, $diaPhuong, $controlName)
 	Local $winGCN = WinWaitActive($theGCNname)
-	ControlClick($winGCN, "", 'WindowsForms10.BUTTON.app.0.33c0d9d13')
+	ControlClick($winGCN, "", $controlName)
 	Local $name = 'Nhập địa chỉ chi tiết'
 	Local $Control1 = 'WindowsForms10.COMBOBOX.app.0.33c0d9d3'
 	Local $Control2 = 'WindowsForms10.COMBOBOX.app.0.33c0d9d2'
@@ -1008,6 +1048,7 @@ EndFunc
 
 Func setUserInfo()
 	Local $name = $theGCNname
+	WinActivate($name)
 	Local $winGCN = WinWaitActive($name)
 	MouseClick('primary', 232, 43, 1, 0)
 	MouseClick('primary', 281, 62, 1, 0)
@@ -1016,6 +1057,7 @@ Func setUserInfo()
 	Local $winGCN2 = WinWaitActive($name)
 	ControlSetText($winGCN2, "", "WindowsForms10.EDIT.app.0.33c0d9d11", $UserName1)
 	ControlSetText($winGCN2, "", "WindowsForms10.EDIT.app.0.33c0d9d14", $UserBirth1)
+	ControlSetText($winGCN2, "", "Edit6", $UserID1[0])
 	ControlSetText($winGCN2, "", "WindowsForms10.EDIT.app.0.33c0d9d13", $UserID1[1])
 	ControlSend($winGCN2, "", "WindowsForms10.EDIT.app.0.33c0d9d9", $IDdate1)
 	; NƠI CẤP CMT, NẾU ĐỂ TRỐNG THÌ TỰ ĐỘNG LẤY GIÁ TRỊ GIẤY CMT MỚI
@@ -1026,7 +1068,7 @@ Func setUserInfo()
 	EndIf
 	; VỀ ĐỊA CHỈ CỦA CÁC USER
 	Local $lenUserAddress1 = UBound($UserAddress1)
-	Local $lenUserAddress2 = UBound($UserAddress2)
+
 	Local $localName1 = ""
 	For $a = 0 To $lenUserAddress1
 		If $a < $lenUserAddress1-3 Then
@@ -1034,7 +1076,8 @@ Func setUserInfo()
 		EndIf
 	Next
 	; NHẬP ĐỊA CHỈ CỦA User1
-	SetAddress($UserAddress1[$lenUserAddress1-1], $UserAddress1[$lenUserAddress1-2], $UserAddress1[$lenUserAddress1-3], $localName1)
+	$buttonUserAddress1 = 'WindowsForms10.BUTTON.app.0.33c0d9d13'
+	SetAddress($UserAddress1[$lenUserAddress1-1], $UserAddress1[$lenUserAddress1-2], $UserAddress1[$lenUserAddress1-3], $localName1, $buttonUserAddress1)
 	; NẾU TÊN CỦA NGƯỜI THỨ HAI KHÔNG BỎ TRỐNG
 	If $UserName2 <> "" Then
 		If $UserAddress2 = "" Then
@@ -1043,7 +1086,20 @@ Func setUserInfo()
 		If $IDplace2 = "" Then
 			$IDplace2 = "Cục CS ĐKQL cư trú và DLQG về Dân cư"
 		EndIf
-		; WRITE INFORMATION TO GCN SOFT WARE
+		Local $UserNamee2 = "WindowsForms10.EDIT.app.0.33c0d9d28"
+		Local $UserBirthh2 = "WindowsForms10.EDIT.app.0.33c0d9d31"
+		Local $UserIDD2 = "WindowsForms10.EDIT.app.0.33c0d9d30"
+		Local $IDdatee2 = "WindowsForms10.EDIT.app.0.33c0d9d26"
+		Local $IDPlacee2 = "WindowsForms10.EDIT.app.0.33c0d9d29"
+		Local $lenUserAddress2 = UBound($UserAddress2)
+		Local $localName2 = ""
+		For $a = 0 To $lenUserAddress2
+			If $a < $lenUserAddress2 - 3 Then
+				$localName2 = $localName2 & $UserAddress2[$a]
+			EndIf
+		Next
+		$buttonUserAddress2 = "WindowsForms10.BUTTON.app.0.33c0d9d31"
+		SetAddress($UserAddress2[$lenUserAddress2-1], $UserAddress2[$lenUserAddress2-2], $UserAddress2[$lenUserAddress2-3], $localName2, $buttonUserAddress2
 	EndIf
 	Send("{F2}")
 	Sleep(1000)
@@ -1061,9 +1117,93 @@ Func setUserInfo()
 	ControlClick($name, "", "WindowsForms10.BUTTON.app.0.33c0d9d21")
 EndFunc
 
+Func nhapThuaDat()
+	WinActivate($theGCNname)
+	WinWaitActive($theGCNname)
+	MouseClick("primary", 346, 118)
+	WinWaitActive($theGCNname)
+	; Nhan vao button them thua dat
+	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d96")
+	ControlSetText($theGCNname, "", "Edit6", "999")
+	Local $maxNumber = ControlGetText($theGCNname, "", "WindowsForms10.STATIC.app.0.33c0d9d25")
+	$arrayMax = StringSplit($maxNumber, " ")
+	$realMaxNumber = Number($arrayMax[$arrayMax[0]]) + 1
+	ControlSetText($theGCNname, "", "WindowsForms10.EDIT.app.0.33c0d9d49", String($realMaxNumber))
+	; LLLLLLLLLLLL
+	ControlSetText($theGCNname, "", "LOOLOLOLOLOLOLLOLOLOL", $landArea)
+	ControlSetText($theGCNname, "", "WindowsForms10.EDIT.app.0.33c0d9d50", $oldLandID)
+	ControlSetText($theGCNname, "", "WindowsForms10.EDIT.app.0.33c0d9d51", $oldPaperNumber)
+	ControlCommand($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d52", "Check")
+	ControlSetText($theGCNname, "", "WindowsForms10.EDIT.app.0.33c0d9d41", $local)
+	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d53")
+	WinWaitActive("Chọn nguồn gốc sử dụng")
+	If $originalOfLand = "case1" Then
+		MouseClick("primary", 42, 133)
+	Else
+		MouseClick("primary", 42, 62)
+	EndIf
+	If $isTangCho = 1 Then
+		MouseClick("primary", 42, 422)
+	ElseIf $isChuyenNhuong = 1 Then
+		MouseClick("primary", 42, 368)
+	EndIf
+	WinClose("Chọn nguồn gốc sử dụng")
+	WinActivate($theGCNname)
+	WinWaitActive($theGCNname)
+	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d55")
+	Send("{ENTER}")
+	Sleep(1000)
+	If WinExists("Thông báo") Then
+		Send("{ENTER}")
+	EndIf
+	MsgBox(0, 0, "Hãy xử lý hết ngoại lệ trước khi nhấn OK)
+	WinActivate($theGCNname)
+	ChooseMyBox($theGCNname, "WindowsForms10.COMBOBOX.app.0.33c0d9d16", "ODT", "có gì đó sai sai")
+	ChooseMyBox($theGCNname, "WindowsForms10.COMBOBOX.app.0.33c0d9d15", "ODT", "có gì đó sai sai")
+	ChooseMyBox($theGCNname, "WindowsForms10.COMBOBOX.app.0.33c0d9d14", "ODT", "có gì đó sai sai")
+	;Cap nhat
+	MsgBox(0, 0, "bạn có thể rà soát và chỉnh sửa thông tin trước khi ấn Ok")
+	WinActivate($theGCNname)
+	WinWaitActive($theGCNname)
+	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d36")
+	Sleep(500)
+	Send("{ENTER}")
+	Sleep(500)
+	Send("{ENTER}")
+	; Chuyển qua
+	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d31")
+EndFunc
+
+Func nhapNhaOThongThuong()
+	WinActivate($theGCNname)
+	WinWaitActive($theGCNname)
+	MouseClick("primary", 422, 16)
+	If $loaiNhaO = "nha o rieng le" Then
+		ChooseMyBox($theGCNname, "WindowsForms10.COMBOBOX.app.0.33c0d9d18", "riêng lẻ", "có gì đó sai sai")
+	ElseIf $loaiNhaO = "Nha lien ke" Then
+		ChooseMyBox($theGCNname, "WindowsForms10.COMBOBOX.app.0.33c0d9d18", "liền kề", "có gì đó sai sai")
+	ElseIf $loaiNhaO = "Nha biet thu" Then
+		ChooseMyBox($theGCNname, "WindowsForms10.COMBOBOX.app.0.33c0d9d18", "biệt thự", "có gì đó sai sai")
+	ElseIf $loaiNhaO = "Nha vuon" Then
+		ChooseMyBox($theGCNname, "WindowsForms10.COMBOBOX.app.0.33c0d9d18", "vườn", "có gì đó sai sai")
+	EndIf
+	ControlSetText($theGCNname, "", "WindowsForms10.EDIT.app.0.33c0d9d56", $dienTichSanKCC)
+	ControlSetText($theGCNname, "", "WindowsForms10.EDIT.app.0.33c0d9d53", $dienTichSuDungKCC)
+	; LLLLLLLLLLLLL
+	ControlSetText($theGCNname, "", "WindowsForms10.EDIT.app.0.33c0d9d53", $DienTichXayDungKCC)
+	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d66")
+	Sleep(500)
+	Send("{ENTER}")
+	Sleep(500)
+	Send("{ENTER}")
+	MsgBox(0, 0, "mời bạn kiểm tra trước khi nhấn OK")
+	WinActivate($theGCNname)
+	WinWaitActive($theGCNname)
+EndFunc
+
 Func setValueCC()
 	WinActivate($theGCNname)
-	WinWait($theGCNname)
+	WinWaitActive($theGCNname)
 	MouseClick('primary', 432, 116)
 	WinWaitActive($theGCNname)
 	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d47")
@@ -1093,7 +1233,7 @@ EndFunc
 
 Func CapGiay()
 	WinActivate($theGCNname)
-	WinWait($theGCNname)
+	WinWaitActive($theGCNname)
 	MouseClick('primary', 53, 114)
 	WinWaitActive($theGCNname)
 	Local $maHoSo = "WindowsForms10.EDIT.app.0.33c0d9d6"
@@ -1103,6 +1243,27 @@ Func CapGiay()
 	Send("{F3}")
 	WinWaitActive("Thông báo")
 	Send("{ENTER}")
+	WinWaitActive($theGCNname)
+	Local $themGiayMoi = "WindowsForms10.BUTTON.app.0.33c0d9d24"
+	ControlClick($theGCNname, "", $themGiayMoi)
+	MouseClick("primary", 489, 201)
+	MouseClick("primary", 940, 201)
+	Local $soCap = "WindowsForms10.BUTTON.app.0.33c0d9d17"
+	ControlCommand($theGCNname, "", $soCap, "Check", "")
+	$LaySeries = "WindowsForms10.BUTTON.app.0.33c0d9d11"
+	ControlClick($theGCNname, "", $LaySeries)
+	Local $soTiepTheo = "WindowsForms10.BUTTON.app.0.33c0d9d13"
+	If $flagGCNID = 1 Then
+		ControlClick($theGCNname, "", $soTiepTheo)
+	EndIf
+	Local $capNhat = "WindowsForms10.BUTTON.app.0.33c0d9d26"
+	ControlClick($theGCNname, "", $capNhat)
+	WinWaitActive("Thông báo")
+	Send("{ENTER}")
+	MsgBox(0, 0, "hãy giải quyết mọi lỗi xảy ra(nếu có) trước khi nhấn OK")
+	WinActivate($theGCNname)
+	ControlClick($theGCNname, "", "WindowsForms10.BUTTON.app.0.33c0d9d45")
+EndFunc
 ; PHAN TAO PHIEU CHUYEN
 EndFunc
 
