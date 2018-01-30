@@ -1,33 +1,156 @@
+	#include <ButtonConstants.au3>
+#include <ComboConstants.au3>
+#include <EditConstants.au3>
 #include <GUIConstantsEx.au3>
+#include <StaticConstants.au3>
+#include <TabConstants.au3>
+#include <WindowsConstants.au3>
 #include <MsgBoxConstants.au3>
+#include <StringConstants.au3>
+#include <Word.au3>
+	$CapDoi = GUICreate("Cap Doi", 916, 660, 219, 78)
+	$Tab1CM = GUICtrlCreateTab(8, 8, 953, 641)
+	$TabSheet1CM = GUICtrlCreateTabItem("Chu So Huu")
+	GUICtrlCreateLabel("Ho Va Ten", 32, 56, 56, 17)
+	$editUserName1 = GUICtrlCreateInput("", 96, 56, 201, 21)
+	GUICtrlCreateLabel("Nam Sinh", 312, 56, 50, 17)
+	$editUserBirth1 = GUICtrlCreateInput("", 376, 56, 97, 21)
+	GUICtrlCreateGroup("Gioi tinh", 496, 40, 361, 49)
+	$Radio1CM = GUICtrlCreateRadio("Nam", 512, 56, 65, 22)
+	GUICtrlSetState(-1, $GUI_CHECKED)
+	$Radio2CM = GUICtrlCreateRadio("Nu", 600, 56, 113, 22)
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+	$cmnd1 = GUICtrlCreateCombo("CMND", 32, 104, 57, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
+	$editUserID1 = GUICtrlCreateInput("", 96, 104, 137, 21)
+	GUICtrlCreateLabel("Noi Cap", 248, 104, 42, 17)
+	$editIDPlace1 = GUICtrlCreateInput("", 312, 104, 121, 21)
+	GUICtrlCreateLabel("Ngay Cap", 445, 104)
+	$editIDdate1 = GUICtrlCreateInput("", 512, 104, 121, 21)
+	$laNguoiDungTenPhieuChuyenCB = GUICtrlCreateCheckbox("Dung ten PC", 650, 104)
+	GUICtrlSetState(-1, $GUI_CHECKED)
+	GUICtrlCreateLabel("Dia Chi", 32, 152, 38, 17)
+	$editUserAddress1 = GUICtrlCreateEdit("", 96, 152, 537, 89)
+	GUICtrlCreateLabel("Ho Va Ten", 32, 280, 56, 17)
+	$editUserID2 = GUICtrlCreateInput("", 96, 280, 201, 21)
+	GUICtrlCreateLabel("Nam Sinh", 312, 280, 50, 17)
+	$editUserBirth2 = GUICtrlCreateInput("", 376, 280, 97, 21)
+	$cmnd2 = GUICtrlCreateCombo("CMND", 32, 322, 57, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
+	$editUserID2 = GUICtrlCreateInput("", 96, 322, 137, 21)
+	GUICtrlCreateLabel("Noi Cap", 248, 322, 42, 17)
+	$editIDPlace2 = GUICtrlCreateInput("", 312, 322, 121, 21)
+	GUICtrlCreateLabel("Ngay Cap", 445, 322)
+	$editIDDate2 = GUICtrlCreateInput("", 512, 322, 121, 21)
+	GUICtrlCreateLabel("Dia Chi", 32, 368, 38, 17)
+	$editUserAddress2 = GUICtrlCreateEdit("", 96, 368, 537, 89)
+	$inHoOngBaCheck = GUICtrlCreateCheckbox("In ho ong ba", 645, 368)
+	$OK1 = GUICtrlCreateButton("OK", 96, 480, 115, 49)
 
-Global $g_idButton3 = 9999
+	; TAB 1.1
+	$TabSheetBenBanCM = GUICtrlCreateTabItem("Ben chuyen nhuong, tang cho")
+	GUICtrlCreateLabel("Ho Va Ten", 32, 56, 56, 17)
+	$editSellerName1 = GUICtrlCreateInput("", 96, 56, 201, 21)
+	GUICtrlCreateLabel("Nam Sinh", 312, 56, 50, 17)
+	$editSellerBirth1 = GUICtrlCreateInput("", 376, 56, 97, 21)
+	GUICtrlCreateGroup("Gioi tinh", 496, 40, 361, 49)
+	$Radio1CM = GUICtrlCreateRadio("Nam", 512, 56, 65, 22)
+	GUICtrlSetState(-1, $GUI_CHECKED)
+	$Radio2CM = GUICtrlCreateRadio("Nu", 600, 56, 113, 22)
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+	$cmnd1 = GUICtrlCreateCombo("CMND", 32, 104, 57, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
+	$editSellerID1 = GUICtrlCreateInput("", 96, 104, 137, 21)
 
-gui1()
+	GUICtrlCreateLabel("Dia Chi", 32, 152, 38, 17)
+	$editSellerAddress1 = GUICtrlCreateEdit("", 96, 152, 537, 89)
+	GUICtrlCreateLabel("Ho Va Ten", 32, 280, 56, 17)
+	$editSellerID2 = GUICtrlCreateInput("", 96, 280, 201, 21)
+	GUICtrlCreateLabel("Nam Sinh", 312, 280, 50, 17)
+	$editSellerBirth2 = GUICtrlCreateInput("", 376, 280, 97, 21)
+	$cmnd2 = GUICtrlCreateCombo("CMND", 32, 322, 57, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
+	$editSellerID2 = GUICtrlCreateInput("", 96, 322, 137, 21)
+	GUICtrlCreateLabel("Dia Chi", 32, 368, 38, 17)
+	$editSellerAddress2 = GUICtrlCreateEdit("", 96, 368, 537, 89)
+	$OKSeller = GUICtrlCreateButton("OK", 96, 480, 115, 49)
 
-Func gui1()
-	Local $hGUI1 = GUICreate("Gui 1", 200, 200, 100, 100)
-	Local $idButton1 = GUICtrlCreateButton("Msgbox 1", 10, 10, 80, 30)
-	Local $idButton2 = GUICtrlCreateButton("Show Gui 2", 10, 60, 80, 30)
-	GUISetState()
+	; TAB2
+	$TabSheet2CM = GUICtrlCreateTabItem("Thua Dat")
+	$editLandArea = GUICtrlCreateInput("", 104, 88, 121, 21)
+	GUICtrlCreateLabel("Dien Tich", 32, 88, 50, 17)
+	GUICtrlCreateLabel("So To Cu", 32, 128, 49, 17)
+	GUICtrlCreateLabel("So Thua Cu", 248, 136, 61, 17)
+	$editOldPaperNumber = GUICtrlCreateInput("", 104, 128, 121, 21)
+	$editOldLandID = GUICtrlCreateInput("", 336, 128, 121, 21)
+	GUICtrlCreateGroup("Nguon goc su dung dat", 24, 200, 455, 113)
+	$Radio3CM = GUICtrlCreateRadio("Nha nuoc giao dat co thu tien su dung dat", 64, 232, 345, 17)
+	GUICtrlSetState(-1, $GUI_CHECKED)
+	$Radio4CM = GUICtrlCreateRadio("Cong nhan quyen su dung dat nhu nha nuoc giao dat co thu tien su dung dat", 64, 264, 405, 17)
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+	GUICtrlCreateGroup("Nguon goc su dung dat 2", 500, 200, 405, 113)
+	$radioChuyenNhuong = GUICtrlCreateRadio("Nhan chuyen nhuong", 540, 232, 300, 17)
+	GUICtrlSetState(-1, $GUI_CHECKED)
+	$radioTangCho = GUICtrlCreateRadio("Duoc tang cho", 540, 264, 300, 17)
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+	$OK2 = GUICtrlCreateButton("OK", 24, 336, 107, 33)
+	GUICtrlCreateLabel("Nha Gan Lien Voi Dat O", 24, 408, 119, 17)
+	GUICtrlCreateLabel("Dat O", 32, 56, 32, 17)
+	GUICtrlCreateLabel("Dien Tich San", 24, 456, 72, 17)
+	GUICtrlCreateLabel("Dien Tich Su Dung", 24, 496, 95, 17)
+	$editDienTichSan = GUICtrlCreateInput("", 168, 456, 121, 21)
+	$editDienTichSuDung = GUICtrlCreateInput("", 168, 496, 121, 21)
+	GUICtrlCreateLabel("Dien Tich Xay Dung", 24, 536, 100, 17)
+	$editDienTichXayDung = GUICtrlCreateInput("", 168, 536, 121, 21)
+	$comboNha = GUICtrlCreateCombo("Nha o rieng le", 168, 400, 145, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
+	GUICtrlSetData($comboNha, "Nha lien ke|Nha biet thu|Nha vuon", "Nha o rieng le")
+	$OK3 = GUICtrlCreateButton("OK", 24, 584, 107, 33)
 
-	While 1
-		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE
-				ExitLoop
-			Case $idButton1
-				MsgBox($MB_OK, "MsgBox 1", "Test from Gui 1")
-			Case $idButton2
-				GUICtrlSetState($idButton2, $GUI_DISABLE)
-				gui2()
-			Case $g_idButton3
-				MsgBox($MB_OK, "MsgBox 2", "Test from Gui 2")
-		EndSwitch
-	WEnd
-EndFunc   ;==>gui1
 
-Func gui2()
-	Local $hGUI2 = GUICreate("Gui 2", 200, 200, 350, 350)
-	Global $g_idButton3 = GUICtrlCreateButton("MsgBox 2", 10, 10, 80, 30)
-	GUISetState()
-EndFunc   ;==>gui2
+
+	; TAB 3
+	GUICtrlCreateTabItem("Can Ho Chung Cu")
+	$ChonChungCu = GUICtrlCreateButton("Chon Chung Cu", 48, 64, 139, 41)
+	GUICtrlCreateLabel("So Can Ho", 56, 152, 56, 17)
+	$editPropertyAddress = GUICtrlCreateInput("", 176, 152, 121, 21)
+	$editDienTichSuDungCC = GUICtrlCreateInput("", 176, 200, 121, 21)
+	GUICtrlCreateLabel("Dien Tich Su Dung", 56, 200, 95, 17)
+	GUICtrlCreateLabel("Dien Tich San", 56, 248, 72, 17)
+	$editDienTichSanCC = GUICtrlCreateInput("", 176, 248, 121, 21)
+	GUICtrlCreateGroup("Nguon goc su dung dat 2", 400, 100, 405, 113)
+	$radioChuyenNhuongCC = GUICtrlCreateRadio("Nhan chuyen nhuong", 440, 132, 300, 17)
+	GUICtrlSetState(-1, $GUI_CHECKED)
+	$radioTangChoCC = GUICtrlCreateRadio("Duoc tang cho", 440, 164, 300, 17)
+	$OK4 = GUICtrlCreateButton("OK", 48, 312, 99, 49)
+
+	; TAB 4
+	$TabSheet4CM = GUICtrlCreateTabItem("Cap GCN")
+	GUICtrlCreateLabel("So Giay Chung Nhan", 56, 96, 104, 17)
+	$editGCNID = GUICtrlCreateInput("", 194, 96, 121, 21)
+	GUICtrlCreateLabel("So Giay Chung Nhan cu", 56, 140)
+	$editOldGCNID = GUICtrlCreateInput("", 194, 140, 121, 21)
+	GUICtrlCreateLabel("Loai Giay Chung Nhanh cu", 56, 185)
+	$editKindOfOldGCN = GUICtrlCreateInput("", 194, 185, 300, 21)
+	GUICtrlCreateLabel("Ngay Cap GCN cu", 56, 230)
+	$editOldGCNDate = GUICtrlCreateInput("", 194, 230, 121, 21)
+	GUICtrlCreateLabel("Noi cap", 56, 275)
+	$editOldGCNPlace = GUICtrlCreateInput("", 194, 275, 300, 21)
+	GUICtrlCreateLabel("Ten Hop Dong", 56, 320)
+	$editContractName = GUICtrlCreateInput("", 194, 320, 300, 21)
+	GUICtrlCreateLabel("So cong chung", 56, 365)
+	$editContractID = GUICtrlCreateInput("", 194, 365, 121, 21)
+	GUICtrlCreateLabel("Hop dong ky ngay", 56, 410)
+	$editContractDate = GUICtrlCreateInput("", 194, 410, 121, 21)
+	GUICtrlCreateLabel("Cong chung tai", 56, 455)
+	$editContractPlace = GUICtrlCreateInput("", 194, 455, 300, 21)
+	$Button4CM = GUICtrlCreateButton("So tiep theo", 336, 96, 75, 25)
+	$Cap = GUICtrlCreateButton("Cap Nhat GCN", 56, 500, 139, 57)
+	$Button3CM = GUICtrlCreateButton("Ve So Do", 224, 500, 139, 57)
+	$lamPhieuChuyen = GUICtrlCreateButton("PC, BC, TT", 400, 500, 139, 57)
+	GUICtrlCreateTabItem("")
+	GUISetState(@SW_SHOW)
+
+While 1
+	$nMsg = GUIGetMsg()
+	Switch $nMsg
+		Case $GUI_EVENT_CLOSE
+			Exit
+
+	EndSwitch
+WEnd
